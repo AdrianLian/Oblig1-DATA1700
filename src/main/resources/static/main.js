@@ -35,7 +35,7 @@ function buy() {
     if (telefonnrValue === "") {
         validTicket = false;
         document.querySelector('#telefonnrTxtError').innerHTML = "telefonnr cant be empty";
-    } else if (telefonnrValue.length === 8) {
+    } else if (telefonnrValue.length !== 8) {
         validTicket = false;
         document.querySelector('#telefonnrTxtError').innerHTML = "telefonnr må være 8 siffere";
     } else if (isNaN(telefonnrValue)) {
