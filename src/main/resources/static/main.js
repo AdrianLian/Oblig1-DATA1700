@@ -8,61 +8,77 @@ function buy() {
     let telefonnrValue = document.querySelector('#telefonnrTxt').value;
     let epostValue = document.querySelector('#epostTxt').value;
 
-    if (filmValue === "-1"){
+    if (filmValue === "-1") {
         validTicket = false;
-        document.querySelector('#filmOptionError').innerHTML="Må velge en film";
-    }else {
-        document.querySelector('#filmOptionError').innerHTML="";
+        document.querySelector('#filmOptionError').innerHTML = "Må velge en film";
+    } else {
+        document.querySelector('#filmOptionError').innerHTML = "";
     }
-    if (antallValue < 1 || antallValue === "" || Number.isInteger(antallValue*1) === false){
+    if (antallValue < 1 || antallValue === "" || antallValue % 1 !== 0) {
         validTicket = false;
-        document.querySelector('#antallInputError').innerHTML="Input must be a whole number greater than 0";
-    }else {
-        document.querySelector('#antallInputError').innerHTML="";
+        document.querySelector('#antallInputError').innerHTML = "Input must be a whole number greater than 0";
+    } else {
+        document.querySelector('#antallInputError').innerHTML = "";
     }
-    if (fornavnValue === ""){
+    if (fornavnValue === "") {
         validTicket = false;
-        document.querySelector('#fornavnTxtError').innerHTML="Fornavn cant be empty";
-    }else {
-        document.querySelector('#fornavnTxtError').innerHTML="";
+        document.querySelector('#fornavnTxtError').innerHTML = "Fornavn cant be empty";
+    } else {
+        document.querySelector('#fornavnTxtError').innerHTML = "";
     }
-    if (etternavnValue === ""){
+    if (etternavnValue === "") {
         validTicket = false;
-        document.querySelector('#etternavnTxtError').innerHTML="Etternavn cant be empty";
-    }else {
-        document.querySelector('#etternavnTxtError').innerHTML="";
+        document.querySelector('#etternavnTxtError').innerHTML = "Etternavn cant be empty";
+    } else {
+        document.querySelector('#etternavnTxtError').innerHTML = "";
     }
-    if (telefonnrValue === ""){
+    if (telefonnrValue === "") {
         validTicket = false;
-        document.querySelector('#telefonnrTxtError').innerHTML="telefonnr cant be empty";
-    }else {
-        document.querySelector('#telefonnrTxtError').innerHTML="";
+        document.querySelector('#telefonnrTxtError').innerHTML = "telefonnr cant be empty";
+    } else if (telefonnrValue.length === 8) {
+        validTicket = false;
+        document.querySelector('#telefonnrTxtError').innerHTML = "telefonnr må være 8 siffere";
+    } else if (isNaN(telefonnrValue)) {
+        validTicket = false;
+        document.querySelector('#telefonnrTxtError').innerHTML = "telefonnr må være et tall";
+    } else {
+        document.querySelector('#telefonnrTxtError').innerHTML = "";
     }
 
     let validEpost = false
     for (let i = 0; i < epostValue.length; i++) {
-        if (epostValue[i] === "@"){
+        if (epostValue[i] === "@") {
             validEpost = true;
         }
     }
-    if (epostValue === "" || validEpost === false){
+    if (!validEpost) {
         validTicket = false;
-        document.querySelector('#epostTxtError').innerHTML="Epost cant be empty and must include an \"@\"";
-    }else {
-
-        document.querySelector('#epostTxtError').innerHTML="";
+        document.querySelector('#epostTxtError').innerHTML = "Epost må inneholde en \"@\"";
+        validTicket = false;
+    } else if (epostValue === "") {
+        document.querySelector('#epostTxtError').innerHTML = "Epost kan ikke være tom";
+        validTicket = false;
+    } else {
+        document.querySelector('#epostTxtError').innerHTML = "";
     }
 
-    if (validTicket === true){
-        let ticket = {film:filmValue, antall:antallValue, fornavn:fornavnValue, etternavn:etternavnValue, telefonnr:telefonnrValue, epost:epostValue};
+    if (validTicket === true) {
+        let ticket = {
+            film: filmValue,
+            antall: antallValue,
+            fornavn: fornavnValue,
+            etternavn: etternavnValue,
+            telefonnr: telefonnrValue,
+            epost: epostValue
+        };
         ticketsArr.push(ticket);
     }
-    console.log(ticketsArr);
+
     showTickets()
 }
 
 
-function showTickets(){
+function showTickets() {
     let table = document.querySelector('#ticketTable');
 
     // Select all elements with the specified class
@@ -116,9 +132,9 @@ function showTickets(){
             showTickets();
         }
     }
-    }
+}
 
-    function deleteAllTickets(){
+function deleteAllTickets() {
     ticketsArr = [];
     showTickets()
-    }
+}
